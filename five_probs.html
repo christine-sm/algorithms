@@ -8,6 +8,50 @@
   <!-- From  https://www.shiftedup.com/2015/05/07/five-programming-problems-every-software-engineer-should-be-able-to-solve-in-less-than-1-hour -->
   <script type="text/javascript">
     //Problem 1: Write three functions that compute the sum of the numbers in a given list using a for-loop, a while-loop, and recursion.
+    var sum = {
+      numbers: [1,2,3,4,5],
+      total: 0,
+      i: 0,
+      forLoop: function() {
+        this.resetTotal();
+        for (var i = 0; i < this.numbers.length; i++) {
+          this.total += this.numbers[i];
+        }
+        console.log(this.total);
+        return this.total;
+      },
+      whileLoop: function() {
+        this.resetTotal();
+        while (this.i < this.numbers.length) {
+          this.total += this.numbers[this.i];
+          this.i++;
+        }
+        console.log(this.total);
+        return this.total;
+      },
+      recursionOne: function() {
+        //can't do resetTotal() because it's recursive
+        if (this.i < this.numbers.length) {
+          this.total += this.numbers[this.i];
+          this.i++
+          this.recursionOne();
+        }
+        console.log(this.total);
+      },
+      recursionTwo: function() {
+        //can't do resetTotal() because it's recursive
+        if (this.numbers.length > 0) {
+          this.total += this.numbers[0];
+          this.numbers.splice([0], 1);
+          this.recursionTwo();
+        }
+        console.log(this.total);
+      },
+      resetTotal: function() {
+        this.total = 0;
+        this.i = 0;
+      }
+    }
 
     //Problem 2: Write a function that combines two lists by alternatingly taking elements. For example: given the two lists [a, b, c] and [1, 2, 3], the function should return [a, 1, b, 2, c, 3].
 

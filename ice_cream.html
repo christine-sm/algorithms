@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Ice Cream Parlor</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      //From https://www.hackerrank.com/challenges/icecream-parlor
+
+      for (var i = 0; i < c.length; i++) {
+         for (var j = i + 1; i < c.length; j++) {
+           if (c[i] + c[j] == M) {
+             console.log(i);
+             console.log(j);
+           }
+         }
+       }
+
+       function solutionTwo(money, flavorCosts) {
+        sortedFlavorsCosts = flavorCosts.sort()
+        var result = flavorCosts[0] + sortedFlavorsCosts[-1];
+        if (result == money) {
+          //return result;
+        } else if (result > money) {
+          //eliminate last;
+        } else {
+          //eliminate first;
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Paragraphs to Sentences</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      //from https://www.hackerrank.com/challenges/from-paragraphs-to-sentences
+      function processData(input) {
+        var splitText = input.replace(/([.?!])\s*(?=[A-Z])/g, "$1|").split("|");
+        var joinText = splitText.join("\n");
+        console.log(joinText);
+      }
+    </script>
+
+  </body>
+</html>

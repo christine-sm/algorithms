@@ -28,33 +28,33 @@
   It is not sufficient to simply take the difference between the highest price and the lowest price, because the highest price may come before the lowest price. You must buy before you sell.
 
   What if the stock value goes down all day? In that case, the best profit will be negative.
+
   You can do this in O(n) time and O(1) space! -->
   <script type="text/javascript">
   const stockPricesYesterday = [10, 7, 5, 8, 11, 9];
-  //const sortedStocks = stockPricesYesterday.sort((a,b) => b - a);
+  const sortedStocks = [11, 10, 9, 8, 7, 5];
 
   function getMaxProfit(arg) {
     let maxProfit;
+    let maxPrice = arg[0];
+    let minPrice = arg[0];
+    let maxPriceIndex;
+    let minPriceIndex = 0;
     arg.forEach((num, i) => {
       if (i > 0) {
-        const slicedArray = arg.slice(0, i + 1);
-        // console.log(slicedArray);
-        const min = Math.min(...slicedArray);
-        const max = Math.max(...slicedArray);
-        // console.log(min);
-        // console.log(max);
-        if (slicedArray.indexOf(max) > slicedArray.indexOf(min)) {
-          const profit = max - min;
-          // console.log(profit);
-          if (maxProfit === undefined || profit > maxProfit) {
-            maxProfit = profit;
-          }
+        if (num > maxPrice && i > minPriceIndex) {
+          maxPrice = num;
+          maxPriceIndex = i;
+        } else if (num < minPrice && (maxPriceIndex === undefined || i < maxPriceIndex)) {
+          minPrice = num;
+          minPriceIndex = i;
         }
-
       }
     });
 
-    if (maxProfit === undefined) {
+    if (maxPriceIndex !== undefined) {
+      maxProfit = maxPrice - minPrice;
+    } else if (maxPriceIndex === undefined) {
       const max = Math.max(...arg);
       const argCopy = arg.slice();
       argCopy.splice(argCopy.indexOf(max), 1);

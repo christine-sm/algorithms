@@ -22,11 +22,19 @@
   getMaxProfit(stockPricesYesterday);
   // returns 6 (buying for $5 and selling for $11)
 
-  No "shorting"—you must buy before you sell. You may not buy and sell in the same time step (at least 1 minute must pass). -->
+  No "shorting"—you must buy before you sell. You may not buy and sell in the same time step (at least 1 minute must pass).
+
+  Gotchas
+  It is not sufficient to simply take the difference between the highest price and the lowest price, because the highest price may come before the lowest price. You must buy before you sell.
+
+  What if the stock value goes down all day? In that case, the best profit will be negative.
+  You can do this in O(n) time and O(1) space! -->
   <script type="text/javascript">
-  var stockPricesYesterday = [10, 7, 5, 8, 11, 9];
+  const stockPricesYesterday = [10, 7, 5, 8, 11, 9];
+  //const sortedStocks = stockPricesYesterday.sort((a,b) => b - a);
+
   function getMaxProfit(arg) {
-    let maxProfit = 0;
+    let maxProfit;
     arg.forEach((num, i) => {
       if (i > 0) {
         const slicedArray = arg.slice(0, i + 1);
@@ -38,13 +46,21 @@
         if (slicedArray.indexOf(max) > slicedArray.indexOf(min)) {
           const profit = max - min;
           // console.log(profit);
-          if (profit > maxProfit) {
+          if (maxProfit === undefined || profit > maxProfit) {
             maxProfit = profit;
           }
         }
 
       }
     });
+
+    if (maxProfit === undefined) {
+      const max = Math.max(...arg);
+      const argCopy = arg.slice();
+      argCopy.splice(argCopy.indexOf(max), 1);
+      const max2 = Math.max(...argCopy);
+      maxProfit = max2 - max;
+    }
     return maxProfit;
     // returns 6 (buying for $5 and selling for $11)
   }

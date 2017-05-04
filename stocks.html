@@ -30,7 +30,7 @@
   What if the stock value goes down all day? In that case, the best profit will be negative.
 
   You can do this in O(n) time and O(1) space! -->
-  <script type="text/javascript">
+  <!-- <script type="text/javascript">
   const stockPricesYesterday = [10, 7, 5, 8, 11, 9];
   const sortedStocks = [11, 10, 9, 8, 7, 5];
 
@@ -65,6 +65,28 @@
     // returns 6 (buying for $5 and selling for $11)
   }
   console.log(getMaxProfit(stockPricesYesterday));
+  </script> -->
+
+  <script type="text/javascript">
+    const stockPricesYesterday = [10, 7, 5, 8, 11, 9];
+    function getMaxProfit(stockPricesYesterday) {
+      if (stockPricesYesterday.length < 2) {
+        throw new Error('Require 2+ prices');
+      }
+
+      let minPrice = stockPricesYesterday[0];
+      let maxProfit = stockPricesYesterday[1] - stockPricesYesterday[0];
+
+      for (let i = 1; i < stockPricesYesterday.length; i++) {
+        let currentPrice = stockPricesYesterday[i];
+        let potentialProfit = currentPrice - minPrice;
+
+        maxProfit = Math.max(maxProfit, potentialProfit);
+        minPrice = Math.min(minPrice, currentPrice);
+      }
+
+      return maxProfit;
+    }
   </script>
 
 </body>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Map Species Data</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      // // Ideal Result
+      // var orders = [
+      //   {
+      //     order_name:
+      //     order_common_name:
+      //     order_common_name_sp:
+      //     families: [
+      //       {
+      //         Family_Name:
+      //         group_name:
+      //         group_name_sp
+      //         species: [
+      //           {
+      //             ScientificName:
+      //             common_name:
+      //             common_name_sp:
+      //           },
+      //           {...}
+      //         ] // end species
+      //       },
+      //       {...}
+      //     ] // end families
+      //   },
+      //   {...}
+      // ] // end orders
+
+      function createTree(data){
+        var orders = []
+
+        data.forEach(function(object, i) {
+          if (orders.length === 0) {
+            orders.push({
+              order_name: object.order_name,
+              order_common_name: object.order_common_name,
+              order_common_name_sp: object.order_common_name_sp,
+              order_id: object.order_id,
+              families: [
+                {
+                  Family_Name: object.Family_Name,
+                  group_name: object.group_name,
+                  group_name_sp: object.group_name_sp,
+                  order_id: object.order_id,
+                  Family_ID: object.Family_ID,
+                  species: [
+                    {
+                      ScientificName: object.ScientificName,
+                      common_name: object.common_name,
+                      common_name_sp: object.common_name_sp,
+                      order_id: object.order_id,
+                      Family_ID: object.Family_ID,
+                      species_id: object.species_id
+                    }
+                  ]
+                }
+              ]
+            })
+          } else if (orders.length > 0 && orders[orders.length - 1].order_name.indexOf(object.order_name) === 0 && orders[orders.length - 1].families[orders[orders.length - 1].families.length -1].Family_Name.indexOf(object.Family_Name) === -1) {
+            orders[orders.length - 1].families.push({
+              Family_Name: object.Family_Name,
+              group_name: object.group_name,
+              group_name_sp: object.group_name_sp,
+              order_id: object.order_id,
+              Family_ID: object.Family_ID,
+              species: [
+                {
+                  ScientificName: object.ScientificName,
+                  common_name: object.common_name,
+                  common_name_sp: object.common_name_sp,
+                  order_id: object.order_id,
+                  Family_ID: object.Family_ID,
+                  species_id: object.species_id
+                }
+              ]
+            })
+          } else if (orders.length > 0 && orders[orders.length - 1].order_name.indexOf(object.order_name) === 0 && orders[orders.length - 1].families[orders[orders.length - 1].families.length -1].Family_Name.indexOf(object.Family_Name) === 0 && orders[orders.length - 1].families[orders[orders.length - 1].families.length - 1].species[orders[orders.length - 1].families[orders[orders.length - 1].families.length - 1].species.length - 1].ScientificName.indexOf(object.ScientificName) === -1) {
+            orders[orders.length - 1].families[orders[orders.length - 1].families.length -1].species.push({
+              ScientificName: object.ScientificName,
+              common_name: object.common_name,
+              common_name_sp: object.common_name_sp,
+              order_id: object.order_id,
+              Family_ID: object.Family_ID,
+              species_id: object.species_id
+            })
+          } else if (orders.length > 0 && orders[orders.length - 1].order_name.indexOf(object.order_name) === -1) {
+            orders.push({
+              order_name: object.order_name,
+              order_common_name: object.order_common_name,
+              order_common_name_sp: object.order_common_name_sp,
+              order_id: object.order_id,
+              families: [
+                {
+                  Family_Name: object.Family_Name,
+                  group_name: object.group_name,
+                  group_name_sp: object.group_name_sp,
+                  order_id: object.order_id,
+                  Family_ID: object.Family_ID,
+                  species: [
+                    {
+                      ScientificName: object.ScientificName,
+                      common_name: object.common_name,
+                      common_name_sp: object.common_name_sp,
+                      order_id: object.order_id,
+                      Family_ID: object.Family_ID,
+                      species_id: object.species_id
+                    }
+                  ]
+                }
+              ]
+            })
+          } else {
+            console.log(object.common_name + ' is missing a place!');
+          }
+        })
+        console.log(orders);
+      }
+
+      function getResponse() {
+        var response = JSON.parse(this.responseText);
+        createTree(response);
+      }
+
+      function callAPI() {
+        var req = new XMLHttpRequest();
+        req.addEventListener('load', getResponse);
+        req.open('GET', '***'); //proprietary API
+        req.send();
+      }
+
+    </script>
+
+  </body>
+</html>

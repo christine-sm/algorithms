@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+<body>
+  <script type="text/javascript">
+  // My solution
+  const arr = [1, 7, 3, 4];
+  function myFunction(arg) {
+    const arrProds = [];
+    arg.forEach(num => {
+      let copy = arg.slice();
+      copy.splice(copy.indexOf(num), 1);
+      // Multiplying the same numbers multiple times
+      let product = copy.reduce((a,b) => a*b);
+      arrProds.push(product)
+    });
+    return arrProds;
+  }
+
+  // Their solution
+  function getProductsOfAllIntsExceptAtIndex(intArray) {
+
+    const productsOfAllIntsExceptAtIndex = [];
+
+    let productSoFar = 1;
+    for (let i = 0; i < intArray.length; i++) {
+      productsOfAllIntsExceptAtIndex[i] = productSoFar;
+      productSoFar *= intArray[i];
+    }
+
+    productSoFar = 1;
+    for (let j = intArray.length - 1; j >= 0; j--) {
+      productsOfAllIntsExceptAtIndex[j] *= productSoFar;
+      productSoFar *= intArray[j];
+    }
+
+    return productsOfAllIntsExceptAtIndex;
+  }
+  </script>
+</body>
+</html>

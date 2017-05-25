@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+<body>
+  <script type="text/javascript">
+  // Here's a formal algorithm:
+  //
+  // We treat the meeting with earlier start time as "first," and the other as "second."
+  // If the end time of the first meeting is equal to or greater than the start time of the second meeting, we merge the two meetings into one time range. The resulting time range's start time is the first meeting's start, and its end time is the later of the two meetings' end times.
+  // Else, we leave them separate.
+  // So, we could compare every meeting to every other meeting in this way, merging them or leaving them separate.
+  //
+  // Comparing all pairs of meetings would take O(n^2) time. We can do better!
+  //
+  //   If we're going to beat O(n^2) time, maybe we're going to get O(n) time? Is there a way to do this in one pass?
+  const meetings = [
+    {startTime: 0,  endTime: 1},
+    {startTime: 3,  endTime: 5},
+    {startTime: 4,  endTime: 8},
+    {startTime: 10, endTime: 12},
+    {startTime: 9,  endTime: 10},
+  ]
+
+  function myFunction(arg) {
+    const meetingsCopy = arg.slice();
+    for (let i = 1; i < arg.length; i++) {
+      console.log(arg[i-1].endTime);
+      console.log(arg[i].startTime);
+      if (arg[i].startTime <= arg[i-1].endTime) {
+        console.log('merge meetings');
+        const newStart = Math.min(arg[i-1].startTime, arg[i].startTime);
+        const newEnd = Math.max(arg[i-1].endTime, arg[i].endTime);
+        console.log(newStart);
+        console.log(newEnd);
+        meetingsCopy.splice(i - 1, 2, {startTime: newStart, endTime: newEnd});
+        console.log(meetingsCopy);
+      }
+    }
+  }
+
+  console.log(myFunction(meetings));
+  </script>
+</body>
+</html>

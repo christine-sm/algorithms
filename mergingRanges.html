@@ -16,6 +16,17 @@
   // Comparing all pairs of meetings would take O(n^2) time. We can do better!
   //
   //   If we're going to beat O(n^2) time, maybe we're going to get O(n) time? Is there a way to do this in one pass?
+
+  //   It'd be great if, for each meeting, we could just try to merge it with the next meeting. But that's definitely not sufficient, because the ordering of our meetings is random. There might be a non-next meeting that the current meeting could be merged with.
+  //
+  // What if we sorted our array of meetings by start time?
+  //
+  // Then any meetings that could be merged would always be adjacent!
+  //
+  // So we could sort our meetings, then walk through the sorted array and see if each meeting can be merged with the one after it.
+  //
+  // Sorting takes O(nlgn) time in the worst case. If we can then do the merging in one pass, that's another O(n) time, for O(nlgn) overall. That's not as good as O(n)O(n), but it's better than O(n^2).
+
   const meetings = [
     {startTime: 0,  endTime: 1},
     {startTime: 3,  endTime: 5},
@@ -26,9 +37,12 @@
 
   function myFunction(arg) {
     const meetingsCopy = arg.slice();
+    meetingsCopy.sort((a,b) => a.startTime - b.startTime);
+    console.log(meetingsCopy);
+
     for (let i = 1; i < arg.length; i++) {
-      console.log(arg[i-1].endTime);
-      console.log(arg[i].startTime);
+      // console.log(arg[i-1].endTime);
+      // console.log(arg[i].startTime);
       if (arg[i].startTime <= arg[i-1].endTime) {
         console.log('merge meetings');
         const newStart = Math.min(arg[i-1].startTime, arg[i].startTime);
@@ -36,9 +50,9 @@
         console.log(newStart);
         console.log(newEnd);
         meetingsCopy.splice(i - 1, 2, {startTime: newStart, endTime: newEnd});
-        console.log(meetingsCopy);
       }
     }
+    console.log(meetingsCopy);
   }
 
   console.log(myFunction(meetings));
